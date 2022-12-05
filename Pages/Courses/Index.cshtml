@@ -1,0 +1,15 @@
+﻿@page
+@model MyCourses.Pages.Courses.IndexModel
+@{
+    ViewData["Title"] = "Courses";
+}
+<div class="text-center">
+    <h1 class="display-4">Course List</h1>
+    <p>Here are my courses.</p>
+</div>
+
+<ul>
+    @foreach(var c in Model.Courses){
+        <li><a href="/Courses/Details?code=@c.Code">@c.Title (@c.Code)</a></li>
+    }
+</ul>

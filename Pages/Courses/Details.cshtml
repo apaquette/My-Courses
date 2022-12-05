@@ -1,0 +1,13 @@
+﻿@page
+@model MyCourses.Pages.Courses.DetailsModel
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Course Details</h1>
+    <h2>@Model.Course.Title</h2>
+    <div>Code: @Model.Course.Code</div>
+    <div>Start: @Model.Course.Start</div>
+    <div>End: @Model.Course.End</div>
+</div>
