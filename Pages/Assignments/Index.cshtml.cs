@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MyCourses.Data;
 using MyCourses.Models;
 
-namespace MyCourses.Pages.Courses
+namespace MyCourses.Pages.Assignments
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,12 @@ namespace MyCourses.Pages.Courses
             _context = context;
         }
 
-        public IList<Course> Course { get;set; }
+        public IList<Assignment> Assignment { get;set; }
 
         public async Task OnGetAsync()
         {
-            Course = await _context.Courses.ToListAsync();
+            Assignment = await _context.Assignments
+                .Include(a => a.Course).ToListAsync();
         }
     }
 }

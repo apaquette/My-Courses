@@ -1,10 +1,19 @@
-using MyCourses.Services;
+using Microsoft.EntityFrameworkCore;
+using MyCourses.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<IFakeDbService, FakeDbService>();
+
+ServerVersion serverVersion = new MariaDbServerVersion(new Version(10, 5, 12));
+
+builder.Services.AddDbContext<MyCoursesDbContext>(options =>
+ options.UseMySql(builder.Configuration.GetConnectionString("MyCoursesDb"), serverVersion)
+ .LogTo(Console.WriteLine, LogLevel.Information)
+ .EnableSensitiveDataLogging()
+ .EnableDetailedErrors()
+);
 
 var app = builder.Build();
 

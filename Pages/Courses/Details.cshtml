@@ -1,13 +1,79 @@
-﻿@page
+@page
 @model MyCourses.Pages.Courses.DetailsModel
+@using MyCourses.Models
+
 @{
-    ViewData["Title"] = "Course Details";
+    ViewData["Title"] = "Details";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Course Details</h1>
-    <h2>@Model.Course.Title</h2>
-    <div>Code: @Model.Course.Code</div>
-    <div>Start: @Model.Course.Start</div>
-    <div>End: @Model.Course.End</div>
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col-6">
+            <h2>@Model.Course.Code Details</h2>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Course.Year)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Course.Year)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Course.Title)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Course.Title)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Course.Code)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Course.Code)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Course.Start)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Course.Start)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Course.End)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Course.End)
+                </dd>
+            </dl>
+            <div>
+                <a asp-page="./Edit" asp-route-id="@Model.Course.CourseId">Edit</a> |
+                <a asp-page="./Index">Back to List</a>
+            </div>
+        </div>
+        <div class="col-6">
+            <h2>Assignments</h2>
+            <hr />
+            <table id="Assignments" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Due</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.Course.Assignments.OrderBy(a => a.Due))
+                    {
+                        <tr>
+                            <td>@a.Title</td>
+                            <td>@a.Due.ToString("MMM dd @ hh:mm tt")</td>
+                            <td>
+                                <a asp-page="../Assignments/Edit" asp-route-id="@a.AssignmentId">Edit</a> |
+                                <a asp-page="../Assignments/Details" asp-route-id="@a.AssignmentId">Details</a> |
+                                <a asp-page="../Assignments/Delete" asp-route-id="@a.AssignmentId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using MyCourses.Data;
 using MyCourses.Models;
 
-namespace MyCourses.Pages.Courses
+namespace MyCourses.Pages.Assignments
 {
     public class DetailsModel : PageModel
     {
-        private readonly MyCoursesDbContext _context;
+        private readonly MyCourses.Data.MyCoursesDbContext _context;
 
-        public DetailsModel(MyCoursesDbContext context)
+        public DetailsModel(MyCourses.Data.MyCoursesDbContext context)
         {
             _context = context;
         }
 
-        public Course Course { get; set; }
+        public Assignment Assignment { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,11 +28,10 @@ namespace MyCourses.Pages.Courses
                 return NotFound();
             }
 
-            if(_context.Courses is not null){
-                Course = await _context.Courses.Include(c => c.Assignments).FirstOrDefaultAsync(m => m.CourseId == id);
-            }
+            Assignment = await _context.Assignments
+                .Include(a => a.Course).FirstOrDefaultAsync(m => m.AssignmentId == id);
 
-            if (Course == null)
+            if (Assignment == null)
             {
                 return NotFound();
             }
